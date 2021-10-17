@@ -6,7 +6,7 @@ export const Root = types
     left: types.optional(types.number, 0.25),
     width: types.optional(types.number, 0.5),
     height: types.optional(types.number, 0.5),
-    angle: types.optional(types.number, 15),
+    angle: types.optional(types.number, 5),
   })
   .views((self) => {
     return {
