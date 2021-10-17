@@ -7,13 +7,10 @@ export const Root = types
     left: types.optional(types.number, 0.25),
     width: types.optional(types.number, 0.5),
     height: types.optional(types.number, 0.5),
-    angle: types.optional(types.number, 5),
+    angle: types.optional(types.number, 0), // radians
   })
   .views((self) => {
     return {
-      get angleRadians(): st.radians {
-        return (self.angle * Math.PI) / 180
-      },
       get center(): { centerX: st.unit; centerY: st.unit } {
         return {
           centerX: self.width / 2 + self.left,
@@ -24,9 +21,6 @@ export const Root = types
   })
   .actions((self) => {
     return {
-      setAngleInRadians(theta: st.radians) {
-        self.angle = theta * (180 / Math.PI)
-      },
       /**
        * Given x and y in percentages relative to box's container
        * (same units as the model), change box's angle so its vertical
@@ -34,7 +28,7 @@ export const Root = types
        */
       rotateToPoint(x: st.unit, y: st.unit): void {
         console.log('rotate', Math.atan2(y, x))
-        // this.setAngleInRadians(Math.atan2(y, x))
+        // this.setAngleInRadians(Math.PI / 4)
       },
     }
   })

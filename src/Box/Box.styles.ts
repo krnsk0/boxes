@@ -8,7 +8,7 @@ export const styles = {
     left: ${left * 100}%;
     width: ${width * 100}%;
     height: ${height * 100}%;
-    transform: rotate(${angle}deg);
+    transform: rotate(${angle}rad);
     transform-origin: center-center;
   `,
 

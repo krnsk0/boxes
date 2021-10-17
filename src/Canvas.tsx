@@ -22,7 +22,7 @@ function Canvas({ WIDTH, HEIGHT }: Props) {
     top,
     left,
     center: { centerX, centerY },
-    angleRadians,
+    angle,
   } = useMst()
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
@@ -43,12 +43,12 @@ function Canvas({ WIDTH, HEIGHT }: Props) {
 
         // rotate around center
         // ctx.translate(scaledCenterX, <scaled></scaled>CenterY)
-        // ctx.rotate(angleRadians)
+        // ctx.rotate(angle)
         // ctx.translate(-scaledCenterX, -scaledCenterY)
         // ctx.fillRect(scaledX, scaledY, scaledW, scaledH)
       }
     }
-  }, [top, left, width, height, centerX, centerY, angleRadians])
+  }, [top, left, width, height, centerX, centerY, angle])
 
   return (
     <canvas
