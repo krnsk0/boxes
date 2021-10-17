@@ -22,7 +22,14 @@ export const Root = types
     }
   })
   .actions((self) => {
-    return {}
+    return {
+      /**
+       * Given x and y in percentages relative to box's container
+       * (same units as the model), change box's angle so its vertical
+       * axis passes through the point
+       */
+      rotateToPoint(x: number, y: number): void {},
+    }
   })
 
 export type IRoot = Instance<typeof Root>

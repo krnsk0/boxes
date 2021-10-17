@@ -1,5 +1,6 @@
 import { css } from '@emotion/react'
 import { observer } from 'mobx-react-lite'
+import { useRef } from 'react'
 import Box from './Box'
 import { useMst } from './StateProvider'
 
@@ -19,10 +20,21 @@ type Props = {
 
 function Overlay({ WIDTH, HEIGHT }: Props) {
   const { top, left, width, height, angle } = useMst()
+  const overlayRef = useRef<HTMLDivElement>(null)
 
   return (
-    <div css={styles.overlay(WIDTH, HEIGHT)}>
-      <Box top={top} left={left} width={width} height={height} angle={angle}>
+    <div css={styles.overlay(WIDTH, HEIGHT)} ref={overlayRef}>
+      <Box
+        parentRef={overlayRef}
+        top={top}
+        left={left}
+        width={width}
+        height={height}
+        angle={angle}
+        handleSize={18}
+        borderSize={6}
+        enableRotation={true}
+      >
         <div>inside</div>
       </Box>
     </div>

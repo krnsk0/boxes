@@ -1,8 +1,6 @@
 import { PropsWithChildren } from 'react'
 import { styles } from './Box.styles'
-
-const HANDLE_SIZE = 18
-const BORDER_SIZE = 6
+import Handle, { HandleNames } from './Handle'
 
 export type BoxViewProps = {
   left: number // percent
@@ -12,17 +10,46 @@ export type BoxViewProps = {
   angle: number // degrees
 }
 
-type BoxComponentProps = PropsWithChildren<BoxViewProps>
+export type BoxConfigProps = {
+  parentRef: React.RefObject<HTMLDivElement>
+  handleSize: number
+  borderSize: number
+  enableRotation: boolean
+}
 
-function Box({ children, top, left, width, height, angle }: BoxComponentProps) {
+type BoxComponentProps = PropsWithChildren<BoxViewProps & BoxConfigProps>
+
+function Box({
+  children,
+  top,
+  left,
+  width,
+  height,
+  angle,
+  parentRef,
+  handleSize,
+  borderSize,
+  enableRotation,
+}: BoxComponentProps) {
   return (
     <div css={styles.container({ top, left, width, height, angle })}>
-      <div css={styles.northeast(HANDLE_SIZE, BORDER_SIZE)}></div>
-      <div css={styles.northwest(HANDLE_SIZE, BORDER_SIZE)}></div>
-      <div css={styles.southwest(HANDLE_SIZE, BORDER_SIZE)}></div>
-      <div css={styles.southeast(HANDLE_SIZE, BORDER_SIZE)}></div>
-      <div css={styles.rotateHandle(HANDLE_SIZE)}></div>
-      <div css={styles.dragBorder(BORDER_SIZE)}>
+      {Object.values(HandleNames)
+        .filter((handleName) => {
+          if (enableRotation) return true
+          else return handleName !== HandleNames.Rotate
+        })
+        .map((handleName) => {
+          return (
+            <Handle
+              key={handleName}
+              handleName={handleName}
+              parentRef={parentRef}
+              handleSize={handleSize}
+              borderSize={borderSize}
+            />
+          )
+        })}
+      <div css={styles.dragBorder(borderSize)}>
         <div css={styles.childContainer}>{children}</div>
       </div>
     </div>
