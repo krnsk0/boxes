@@ -1,8 +1,14 @@
-import Canvas from "./Canvas";
-import { MstProvider } from "./StateProvider";
+import Canvas from './Canvas'
+import Overlay from './Overlay'
+import { MstProvider } from './StateProvider'
+const WIDTH = 500
+const HEIGHT = 500
 
 export function App() {
-
-
-  return <MstProvider><Canvas></Canvas></MstProvider>;
+  return (
+    <MstProvider>
+      <Canvas WIDTH={WIDTH} HEIGHT={HEIGHT} />
+      <Overlay WIDTH={WIDTH} HEIGHT={HEIGHT} />
+    </MstProvider>
+  )
 }
