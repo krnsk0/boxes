@@ -21,10 +21,10 @@ function Handle({
   const pointerMoveHandlerMap: {
     [key in HandleNames]: (x: number, y: number) => void
   } = {
-    [HandleNames.NW]: (x, y) => console.log('NW drag', x, y),
-    [HandleNames.NE]: (x, y) => console.log('NE drag', x, y),
-    [HandleNames.SE]: (x, y) => console.log('SE drag', x, y),
-    [HandleNames.SW]: (x, y) => console.log('SW drag', x, y),
+    [HandleNames.NW]: (x, y) => boxNode.moveNorthwest(x, y),
+    [HandleNames.NE]: (x, y) => boxNode.moveNortheast(x, y),
+    [HandleNames.SE]: (x, y) => boxNode.moveSoutheast(x, y),
+    [HandleNames.SW]: (x, y) => boxNode.moveSouthwest(x, y),
     [HandleNames.Rotate]: (x, y) => boxNode.rotateToPoint(x, y),
   }
 
