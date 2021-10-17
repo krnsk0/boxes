@@ -16,14 +16,7 @@ type Props = {
 }
 
 function Canvas({ WIDTH, HEIGHT }: Props) {
-  const {
-    width,
-    height,
-    top,
-    left,
-    center: { centerX, centerY },
-    angle,
-  } = useMst()
+  const { width, height, top, left, center, angle } = useMst()
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
@@ -38,8 +31,8 @@ function Canvas({ WIDTH, HEIGHT }: Props) {
         const scaledY = HEIGHT * top
         const scaledW = WIDTH * width
         const scaledH = HEIGHT * height
-        const scaledCenterX = WIDTH * centerX
-        const scaledCenterY = HEIGHT * centerY
+        const scaledCenterX = WIDTH * center.x
+        const scaledCenterY = HEIGHT * center.y
 
         // rotate around center
         // ctx.translate(scaledCenterX, <scaled></scaled>CenterY)
@@ -48,7 +41,7 @@ function Canvas({ WIDTH, HEIGHT }: Props) {
         // ctx.fillRect(scaledX, scaledY, scaledW, scaledH)
       }
     }
-  }, [top, left, width, height, centerX, centerY, angle])
+  }, [top, left, width, height, center.x, center.y, angle])
 
   return (
     <canvas

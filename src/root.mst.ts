@@ -11,10 +11,10 @@ export const Root = types
   })
   .views((self) => {
     return {
-      get center(): { centerX: st.unit; centerY: st.unit } {
+      get center(): { x: st.unit; y: st.unit } {
         return {
-          centerX: self.width / 2 + self.left,
-          centerY: self.height / 2 + self.top,
+          x: self.width / 2 + self.left,
+          y: self.height / 2 + self.top,
         }
       },
     }
@@ -27,8 +27,10 @@ export const Root = types
        * axis passes through the point
        */
       rotateToPoint(x: st.unit, y: st.unit): void {
-        console.log('rotate', Math.atan2(y, x))
-        // this.setAngleInRadians(Math.PI / 4)
+        const width = x - self.center.x
+        const height = y - self.center.y
+        const theta = Math.atan2(height, width) + Math.PI / 2
+        self.angle = theta
       },
     }
   })
