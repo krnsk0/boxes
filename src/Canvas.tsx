@@ -30,6 +30,9 @@ function Canvas({ WIDTH, HEIGHT }: Props) {
     if (canvasRef.current) {
       const ctx = canvasRef.current.getContext('2d')
       if (ctx) {
+        ctx.fillStyle = '#FFFFFF'
+        ctx.fillRect(0, 0, WIDTH, HEIGHT)
+
         ctx.fillStyle = '#AADD55'
         const scaledX = WIDTH * left
         const scaledY = HEIGHT * top
@@ -39,11 +42,10 @@ function Canvas({ WIDTH, HEIGHT }: Props) {
         const scaledCenterY = HEIGHT * centerY
 
         // rotate around center
-        ctx.translate(scaledCenterX, scaledCenterY)
-        ctx.rotate(angleRadians)
-        ctx.translate(-scaledCenterX, -scaledCenterY)
-
-        ctx.fillRect(scaledX, scaledY, scaledW, scaledH)
+        // ctx.translate(scaledCenterX, <scaled></scaled>CenterY)
+        // ctx.rotate(angleRadians)
+        // ctx.translate(-scaledCenterX, -scaledCenterY)
+        // ctx.fillRect(scaledX, scaledY, scaledW, scaledH)
       }
     }
   }, [top, left, width, height, centerX, centerY, angleRadians])

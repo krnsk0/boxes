@@ -1,4 +1,5 @@
 import { PropsWithChildren } from 'react'
+import { useMst } from '../StateProvider'
 import { styles } from './Box.styles'
 import Handle, { HandleNames } from './Handle'
 
@@ -46,6 +47,7 @@ function Box({
               parentRef={parentRef}
               handleSize={handleSize}
               borderSize={borderSize}
+              boxNode={useMst()}
             />
           )
         })}

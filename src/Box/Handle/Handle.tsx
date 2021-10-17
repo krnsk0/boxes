@@ -1,12 +1,14 @@
 import { HandleNames } from './handleNames'
 import { styles } from './Handle.styles'
 import { ReactNode } from 'react'
+import { IRoot } from '../../root.mst'
 
 type HandleProps = {
   handleName: HandleNames
   parentRef: React.RefObject<HTMLDivElement | undefined>
   handleSize: number
   borderSize: number
+  boxNode: IRoot
 }
 
 function Handle({
@@ -14,6 +16,7 @@ function Handle({
   handleName,
   handleSize,
   borderSize,
+  boxNode,
 }: HandleProps) {
   const pointerMoveHandlerMap: {
     [key in HandleNames]: (x: number, y: number) => void
@@ -22,7 +25,7 @@ function Handle({
     [HandleNames.NE]: (x, y) => console.log('NE drag', x, y),
     [HandleNames.SE]: (x, y) => console.log('SE drag', x, y),
     [HandleNames.SW]: (x, y) => console.log('SW drag', x, y),
-    [HandleNames.Rotate]: (x, y) => console.log('Rotate drag', x, y),
+    [HandleNames.Rotate]: (x, y) => boxNode.rotateToPoint(x, y),
   }
 
   const onPointerUp = () => {
@@ -32,10 +35,15 @@ function Handle({
 
   const onPointerMove = (e: PointerEvent) => {
     if (parentRef.current) {
-      const { width: parentWidth, height: parentHeight } =
-        parentRef.current.getBoundingClientRect()
-      const x = e.offsetX / parentWidth
-      const y = e.offsetY / parentHeight
+      const {
+        width: parentWidth,
+        height: parentHeight,
+        top: parentTop,
+        left: parentLeft,
+      } = parentRef.current.getBoundingClientRect()
+
+      const x = (e.clientX - parentLeft) / parentWidth
+      const y = (e.clientY - parentTop) / parentHeight
       pointerMoveHandlerMap[handleName](x, y)
     }
   }

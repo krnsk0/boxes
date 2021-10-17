@@ -1,4 +1,5 @@
 import { Instance, types } from 'mobx-state-tree'
+import { st } from './semanticTypes'
 
 export const Root = types
   .model({
@@ -10,10 +11,10 @@ export const Root = types
   })
   .views((self) => {
     return {
-      get angleRadians(): number {
+      get angleRadians(): st.radians {
         return (self.angle * Math.PI) / 180
       },
-      get center(): { centerX: number; centerY: number } {
+      get center(): { centerX: st.unit; centerY: st.unit } {
         return {
           centerX: self.width / 2 + self.left,
           centerY: self.height / 2 + self.top,
@@ -23,12 +24,18 @@ export const Root = types
   })
   .actions((self) => {
     return {
+      setAngleInRadians(theta: st.radians) {
+        self.angle = theta * (180 / Math.PI)
+      },
       /**
        * Given x and y in percentages relative to box's container
        * (same units as the model), change box's angle so its vertical
        * axis passes through the point
        */
-      rotateToPoint(x: number, y: number): void {},
+      rotateToPoint(x: st.unit, y: st.unit): void {
+        console.log('rotate', Math.atan2(y, x))
+        // this.setAngleInRadians(Math.atan2(y, x))
+      },
     }
   })
 
