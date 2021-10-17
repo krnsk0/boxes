@@ -16,7 +16,14 @@ type Props = {
 }
 
 function Canvas({ WIDTH, HEIGHT }: Props) {
-  const { width, height, topLeft } = useMst()
+  const {
+    width,
+    height,
+    top,
+    left,
+    center: { centerX, centerY },
+    angleRadians,
+  } = useMst()
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
@@ -24,15 +31,22 @@ function Canvas({ WIDTH, HEIGHT }: Props) {
       const ctx = canvasRef.current.getContext('2d')
       if (ctx) {
         ctx.fillStyle = '#AADD55'
-        const scaledX = WIDTH * topLeft.x
-        const scaledY = HEIGHT * topLeft.y
+        const scaledX = WIDTH * left
+        const scaledY = HEIGHT * top
         const scaledW = WIDTH * width
         const scaledH = HEIGHT * height
+        const scaledCenterX = WIDTH * centerX
+        const scaledCenterY = HEIGHT * centerY
+
+        // rotate around center
+        ctx.translate(scaledCenterX, scaledCenterY)
+        ctx.rotate(angleRadians)
+        ctx.translate(-scaledCenterX, -scaledCenterY)
 
         ctx.fillRect(scaledX, scaledY, scaledW, scaledH)
       }
     }
-  }, [topLeft.x, topLeft.y, width, height])
+  }, [top, left, width, height, centerX, centerY, angleRadians])
 
   return (
     <canvas
